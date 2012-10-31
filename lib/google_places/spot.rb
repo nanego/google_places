@@ -6,6 +6,7 @@ module GooglePlaces
 
     def self.list(lat, lng, api_key, options = {})
       radius = options.delete(:radius) || 200
+      rankby = options.delete(:rankby)
       sensor = options.delete(:sensor) || false
       types  = options.delete(:types)
       name  = options.delete(:name)
@@ -20,6 +21,7 @@ module GooglePlaces
       options = {
         :location => location.format,
         :radius => radius,
+        :rankby => rankby,
         :sensor => sensor,
         :key => api_key,
         :name => name,
@@ -68,11 +70,18 @@ module GooglePlaces
       else
         with_radius = false
       end
+      
+      if options.has_key?(:rankby)
+        with_rankby = true
+      else
+        with_rankby = false
+      end
 
       query = query
       sensor = options.delete(:sensor) || false
       location = Location.new(options.delete(:lat), options.delete(:lng)) if with_location
       radius = options.delete(:radius) if with_radius
+      rankby = options.delete(:rankby) if with_rankby
       language = options.delete(:language)
       types = options.delete(:types)
       exclude = options.delete(:exclude) || []
@@ -90,6 +99,7 @@ module GooglePlaces
 
       options[:location] = location.format if with_location
       options[:radius] = radius if with_radius
+      options[:rankby] = rankby if with_rankby
 
       # Accept Types as a string or array
       if types
