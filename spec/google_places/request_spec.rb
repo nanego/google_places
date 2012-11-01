@@ -6,6 +6,7 @@ describe GooglePlaces::Request do
     @location = GooglePlaces::Location.new('-33.8670522', '151.1957362').format
     @query = "Statue of liberty, New York"
     @radius = 200
+    @rankby = "distance"
     @sensor = false
     @reference = "CnRsAAAASc4grenwL0h3X5VPNp5fkDNfqbjt3iQtWIPlKS-3ms9GbnCxR_FLHO0B0ZKCgJSg19qymkeHagjQFB4aUL87yhp4mhFTc17DopK1oiYDaeGthztSjERic8TmFNe-6zOpKSdiZWKE6xlQvcbSiWIJchIQOEYZqunSSZqNDoBSs77bWRoUJcMMVANtSlhy0llKI0MI6VcC7DU"
   end

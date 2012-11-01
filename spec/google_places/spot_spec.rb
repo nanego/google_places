@@ -6,6 +6,7 @@ describe GooglePlaces::Spot do
     @lat = '-33.8670522'
     @lng = '151.1957362'
     @radius = 200
+    @rankby = "distance"
     @sensor = false
     @reference = "CnRsAAAASc4grenwL0h3X5VPNp5fkDNfqbjt3iQtWIPlKS-3ms9GbnCxR_FLHO0B0ZKCgJSg19qymkeHagjQFB4aUL87yhp4mhFTc17DopK1oiYDaeGthztSjERic8TmFNe-6zOpKSdiZWKE6xlQvcbSiWIJchIQOEYZqunSSZqNDoBSs77bWRoUJcMMVANtSlhy0llKI0MI6VcC7DU"
   end
@@ -29,6 +30,20 @@ describe GooglePlaces::Spot do
       end
 
       it 'should have Spots with a specific type' do
+        @collection.each do |spot|
+          spot.types.should include('cafe')
+        end
+      end
+    end
+    
+    describe 'with a single type order by distance' do
+      use_vcr_cassette 'list_spots_with_single_type'
+
+      before(:each) do
+        @collection = GooglePlaces::Spot.list(@lat, @lng, api_key, :rankby => @rankby, :sensor => @sensor, :types => 'cafe')
+      end
+
+      it 'should have Spots with a specific type order by distance' do
         @collection.each do |spot|
           spot.types.should include('cafe')
         end
@@ -113,6 +128,8 @@ describe GooglePlaces::Spot do
         end
       end
     end
+    
+
 
   end
 

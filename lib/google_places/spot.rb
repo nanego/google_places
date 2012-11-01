@@ -3,10 +3,9 @@ require 'google_places/review'
 module GooglePlaces
   class Spot
     attr_accessor :lat, :lng, :name, :icon, :reference, :vicinity, :types, :id, :formatted_phone_number, :international_phone_number, :formatted_address, :address_components, :street_number, :street, :city, :region, :postal_code, :country, :rating, :url, :cid, :website, :reviews
-
     def self.list(lat, lng, api_key, options = {})
       radius = options.delete(:radius) || 200
-      rankby = options.delete(:rankby)
+      rankby = options.delete(:rankby) || "DISTANCE"
       sensor = options.delete(:sensor) || false
       types  = options.delete(:types)
       name  = options.delete(:name)
@@ -18,17 +17,35 @@ module GooglePlaces
 
       exclude = [exclude] unless exclude.is_a?(Array)
 
-      options = {
-        :location => location.format,
-        :radius => radius,
-        :rankby => rankby,
-        :sensor => sensor,
-        :key => api_key,
-        :name => name,
-        :language => language,
-        :keyword => keyword,
-        :retry_options => retry_options
-      }
+      if options.has_key?(:rankby) && (options.has_key?(:keyword) || options.has_key?(:name) || options.has_key?(:types))
+        with_rankby = true
+      else
+        with_rankby = false
+      end
+
+      if with_rankby
+        options = {
+          :location => location.format,
+          :rankby => rankby,
+          :sensor => sensor,
+          :key => api_key,
+          :name => name,
+          :language => language,
+          :keyword => keyword,
+          :retry_options => retry_options
+        }
+      else
+        options = {
+          :location => location.format,
+          :radius => radius,
+          :sensor => sensor,
+          :key => api_key,
+          :name => name,
+          :language => language,
+          :keyword => keyword,
+          :retry_options => retry_options
+        }
+      end
 
       # Accept Types as a string or array
       if types
@@ -48,11 +65,11 @@ module GooglePlaces
       retry_options = options.delete(:retry_options) || {}
 
       response = Request.spot(
-        :reference => reference,
-        :sensor => sensor,
-        :key => api_key,
-        :language => language,
-        :retry_options => retry_options
+      :reference => reference,
+      :sensor => sensor,
+      :key => api_key,
+      :language => language,
+      :retry_options => retry_options
       )
 
       self.new(response['result'])
@@ -60,21 +77,21 @@ module GooglePlaces
 
     def self.list_by_query(query, api_key, options)
       if options.has_key?(:lat) && options.has_key?(:lng)
-        with_location = true
+      with_location = true
       else
-        with_location = false
+      with_location = false
       end
 
       if options.has_key?(:radius)
-        with_radius = true
+      with_radius = true
       else
-        with_radius = false
+      with_radius = false
       end
-      
-      if options.has_key?(:rankby)
-        with_rankby = true
+
+      if options.has_key?(:rankby) && (options.has_key?(:keyword) || options.has_key?(:name) || options.has_key?(:types))
+      with_rankby = true
       else
-        with_rankby = false
+      with_rankby = false
       end
 
       query = query
@@ -98,8 +115,11 @@ module GooglePlaces
       }
 
       options[:location] = location.format if with_location
-      options[:radius] = radius if with_radius
-      options[:rankby] = rankby if with_rankby
+      if with_rankby
+        options[:rankby] = rankby
+      else
+        options[:radius] = radius if with_radius
+      end
 
       # Accept Types as a string or array
       if types
@@ -141,7 +161,7 @@ module GooglePlaces
 
     def address_component(address_component_type, address_component_length)
       if component = address_components_of_type(address_component_type)
-        component.first[address_component_length] unless component.first.nil?
+      component.first[address_component_length] unless component.first.nil?
       end
     end
 
@@ -153,12 +173,12 @@ module GooglePlaces
       if json_reviews
         json_reviews.map { |r|
           Review.new(
-              r['aspects'].empty? ? nil : r['aspects'][0]['rating'],
-              r['aspects'].empty? ? nil : r['aspects'][0]['type'],
-              r['author_name'],
-              r['author_url'],
-              r['text'],
-              r['time'].to_i
+          r['aspects'].empty? ? nil : r['aspects'][0]['rating'],
+          r['aspects'].empty? ? nil : r['aspects'][0]['type'],
+          r['author_name'],
+          r['author_url'],
+          r['text'],
+          r['time'].to_i
           )
         }
       else []
