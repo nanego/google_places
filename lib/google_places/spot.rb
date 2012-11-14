@@ -76,11 +76,11 @@ module GooglePlaces
         :sensor => sensor,
         :key => api_key,
         :language => language,
-        :retry_options => retry_options
+        :retry_options => retry_options,
+        :rankby => "distance"
       }
 
       options[:location] = location.format if with_location
-      options[:rankby] = "distance"
 
       # Accept Types as a string or array
       if types
