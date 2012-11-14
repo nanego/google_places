@@ -4,8 +4,6 @@ module GooglePlaces
   class Spot
     attr_accessor :lat, :lng, :name, :icon, :reference, :vicinity, :types, :id, :formatted_phone_number, :international_phone_number, :formatted_address, :address_components, :street_number, :street, :city, :region, :postal_code, :country, :rating, :url, :cid, :website, :reviews
     def self.list(lat, lng, api_key, options = {})
-      radius = options.delete(:radius) || 5000
-      rankby = options.delete(:rankby) || "DISTANCE"
       sensor = options.delete(:sensor) || false
       types  = options.delete(:types)
       name  = options.delete(:name)
@@ -17,35 +15,16 @@ module GooglePlaces
 
       exclude = [exclude] unless exclude.is_a?(Array)
 
-      if options.has_key?(:rankby) && (options.has_key?(:keyword) || options.has_key?(:name) || options.has_key?(:types))
-        with_rankby = true
-      else
-        with_rankby = false
-      end
-
-      if with_rankby
-        options = {
-          :location => location.format,
-          :rankby => rankby,
-          :sensor => sensor,
-          :key => api_key,
-          :name => name,
-          :language => language,
-          :keyword => keyword,
-          :retry_options => retry_options
-        }
-      else
-        options = {
-          :location => location.format,
-          :radius => radius,
-          :sensor => sensor,
-          :key => api_key,
-          :name => name,
-          :language => language,
-          :keyword => keyword,
-          :retry_options => retry_options
-        }
-      end
+      options = {
+        :location => location.format,
+        :rankby => "distance",
+        :sensor => sensor,
+        :key => api_key,
+        :name => name,
+        :language => language,
+        :keyword => keyword,
+        :retry_options => retry_options
+      }
 
       # Accept Types as a string or array
       if types
@@ -82,23 +61,9 @@ module GooglePlaces
       with_location = false
       end
 
-      if options.has_key?(:radius)
-      with_radius = true
-      else
-      with_radius = false
-      end
-
-      if options.has_key?(:rankby) && (options.has_key?(:keyword) || options.has_key?(:name) || options.has_key?(:types))
-      with_rankby = true
-      else
-      with_rankby = false
-      end
-
       query = query
       sensor = options.delete(:sensor) || false
       location = Location.new(options.delete(:lat), options.delete(:lng)) if with_location
-      radius = options.delete(:radius) if with_radius
-      rankby = options.delete(:rankby) if with_rankby
       language = options.delete(:language)
       types = options.delete(:types)
       exclude = options.delete(:exclude) || []
@@ -115,11 +80,7 @@ module GooglePlaces
       }
 
       options[:location] = location.format if with_location
-      if with_rankby
-        options[:rankby] = rankby
-      else
-        options[:radius] = radius if with_radius
-      end
+      options[:rankby] = "distance"
 
       # Accept Types as a string or array
       if types
