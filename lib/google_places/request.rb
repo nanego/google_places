@@ -11,7 +11,7 @@ module GooglePlaces
 
     def self.spots(options = {})
       request = new(SPOTS_LIST_URL, options)
-      
+      raise "#{SPOTS_LIST_URL} #{options.inspect}"
       request.parsed_response
     end
 
