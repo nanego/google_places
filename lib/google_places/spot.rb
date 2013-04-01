@@ -217,7 +217,7 @@ module GooglePlaces
     def self.request(method, multipage_request, exclude, options)
       results = []
       self.multi_pages_request(method, multipage_request, options) do |result|
-        raise(result.inspect)
+        # raise(result.inspect)
         results << self.new(result) if (result['types'] & exclude) == []
       end
       results
