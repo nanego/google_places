@@ -218,14 +218,10 @@ module GooglePlaces
     def self.request(method, multipage_request, exclude, options)
       results = []
       self.multi_pages_request(method, multipage_request, options) do |result|
-        # raise result.inspect
-        tmp = self.new(result)
-        tmp.nextpage = result["nextpage"]
-        # raise tmp.inspect
-        results << tmp if (result['types'] & exclude) == []
+        spot = self.new(result)
+        results << spot if (result['types'] & exclude) == []
       end
       results
-      # raise(results.inspect)
     end
 
     def self.multi_pages_request(method, multipage_request, options)
@@ -288,6 +284,7 @@ module GooglePlaces
       @review_summary             = json_result_object['review_summary']
       @photos                     = photos_component(json_result_object['photos'])
       @reviews                    = reviews_component(json_result_object['reviews'])
+      @nextpage                   = json_result_object['nextpage']
     end
 
     def address_component(address_component_type, address_component_length)
