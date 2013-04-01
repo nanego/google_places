@@ -86,6 +86,7 @@ module GooglePlaces
       end
 
       request(:spots, multipage_request, exclude, options)
+      # raise(request(:spots, multipage_request, exclude, options).inspect)
 
     end
 
@@ -217,10 +218,14 @@ module GooglePlaces
     def self.request(method, multipage_request, exclude, options)
       results = []
       self.multi_pages_request(method, multipage_request, options) do |result|
-        # raise(result.inspect)
-        results << self.new(result) if (result['types'] & exclude) == []
+        # raise result.inspect
+        tmp = self.new(result)
+        tmp.nextpage = result["nextpage"]
+        # raise tmp.inspect
+        results << tmp if (result['types'] & exclude) == []
       end
       results
+      raise(results.inspect)
     end
 
     def self.multi_pages_request(method, multipage_request, options)
@@ -229,11 +234,12 @@ module GooglePlaces
         response = Request.send(method, options)
         response['results'].each do |result|
 
-          #if !multipage_request && !response["next_page_token"].nil? && result == response['results'].last
-            result.merge!(:nextpage => response["next_page_token"])
-          #end
+          if !multipage_request && !response["next_page_token"].nil? && result == response['results'].last
+            result.merge!("nextpage" => response["next_page_token"])
+          end
 
           yield(result)
+
         end
 
         # request the next page if presence of a "next_page" token
