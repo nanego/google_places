@@ -2,6 +2,7 @@ require 'google_places/review'
 
 module GooglePlaces
   class Spot
+
     attr_accessor :lat, :lng, :name, :icon, :reference, :vicinity, :types, :id, :formatted_phone_number, :international_phone_number, :formatted_address, :address_components, :street_number, :street, :city, :region, :postal_code, :country, :rating, :url, :cid, :website, :reviews, :aspects, :zagat_selected, :zagat_reviewed, :photos, :review_summary, :nextpage
 
     # Search for Spots at the provided location
@@ -85,6 +86,7 @@ module GooglePlaces
       end
 
       request(:spots, multipage_request, exclude, options)
+
     end
 
     # Search for a Spot with a reference key
@@ -215,6 +217,7 @@ module GooglePlaces
     def self.request(method, multipage_request, exclude, options)
       results = []
       self.multi_pages_request(method, multipage_request, options) do |result|
+        raise(result.inspect)
         results << self.new(result) if (result['types'] & exclude) == []
       end
       results
@@ -226,9 +229,9 @@ module GooglePlaces
         response = Request.send(method, options)
         response['results'].each do |result|
 
-          if !multipage_request && !response["next_page_token"].nil? && result == response['results'].last
+          #if !multipage_request && !response["next_page_token"].nil? && result == response['results'].last
             result.merge!(:nextpage => response["next_page_token"])
-          end
+          #end
 
           yield(result)
         end
@@ -279,7 +282,6 @@ module GooglePlaces
       @review_summary             = json_result_object['review_summary']
       @photos                     = photos_component(json_result_object['photos'])
       @reviews                    = reviews_component(json_result_object['reviews'])
-      @nextpage = json_result_object['nextpage']
     end
 
     def address_component(address_component_type, address_component_length)
