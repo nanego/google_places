@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9afec551-f310-4713-9c2c-154d3466f666" name="Default" comment="" />
+    <list default="true" id="9afec551-f310-4713-9c2c-154d3466f666" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/google_places/spot.rb" afterPath="$PROJECT_DIR$/lib/google_places/spot.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="google_places.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364799340382" ignored="false" />
     <file path="/spot.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364802857384" ignored="false" />
+    <file path="$PROJECT_DIR$/../txtup/Gemfile" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803268001" ignored="false" />
+    <file path="$PROJECT_DIR$/../txtup/app/controllers/recherches_controller.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803621865" ignored="false" />
+    <file path="/recherches_controller.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803564387" ignored="false" />
+    <file path="$USER_HOME$/.rbenv/versions/1.9.3-p0/lib/ruby/gems/1.9.1/bundler/gems/google_places-47b4b34c863b/lib/google_places/spot.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803734182" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +32,7 @@
       <file leaf-file-name="spot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/google_places/spot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="182" column="54" selection-start="9624" selection-end="9624" vertical-scroll-proportion="-2.9854546">
+            <state line="54" column="26" selection-start="3999" selection-end="3999" vertical-scroll-proportion="1.5709091">
               <folding />
             </state>
           </provider>
@@ -234,7 +241,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/google_places/spot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="54" selection-start="9624" selection-end="9624" vertical-scroll-proportion="-2.9854546">
+        <state line="54" column="26" selection-start="3999" selection-end="3999" vertical-scroll-proportion="1.5709091">
           <folding />
         </state>
       </provider>

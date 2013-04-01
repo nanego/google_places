@@ -52,7 +52,7 @@ module GooglePlaces
     # @see https://developers.google.com/maps/documentation/places/supported_types List of supported types
     def self.list(lat, lng, api_key, sensor, options = {})
       location = Location.new(lat, lng)
-      multipage_request = !!options.delete(:multipage) || false if multipage.nil?
+      multipage_request = options.delete(:multipage) || false if multipage.nil?
       rankby = options.delete(:rankby)
       radius = options.delete(:radius) || 1000 if rankby.nil?
       types  = options.delete(:types)
@@ -180,7 +180,7 @@ module GooglePlaces
 
       query = query
       sensor = sensor
-      multipage_request = !!options.delete(:multipage) || false if multipage.nil?
+      multipage_request = options.delete(:multipage) || false if multipage.nil?
       location = Location.new(options.delete(:lat), options.delete(:lng)) if with_location
       radius = options.delete(:radius) if with_radius
       rankby = options.delete(:rankby)
