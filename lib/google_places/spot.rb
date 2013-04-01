@@ -225,11 +225,11 @@ module GooglePlaces
 
         response = Request.send(method, options)
         response['results'].each do |result|
+
           if !multipage_request && !response["next_page_token"].nil? && result == response['results'].last
-            @nextpage = response["next_page_token"]
-          else
-            @nextpage = "TEST"
+            result.merge!(:nextpage => response["next_page_token"])
           end
+
           yield(result)
         end
 
