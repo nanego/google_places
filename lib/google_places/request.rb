@@ -11,6 +11,7 @@ module GooglePlaces
     NEARBY_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
     DETAILS_URL       = 'https://maps.googleapis.com/maps/api/place/details/json'
     TEXT_SEARCH_URL   = 'https://maps.googleapis.com/maps/api/place/textsearch/json'
+    PAGETOKEN_URL     = 'https://maps.googleapis.com/maps/api/place/search/json'
 
     # Search for Spots at the provided location
     #
@@ -118,6 +119,11 @@ module GooglePlaces
     # @see https://developers.google.com/maps/documentation/places/supported_types List of supported types
     def self.spots_by_query(options = {})
       request = new(TEXT_SEARCH_URL, options)
+      request.parsed_response
+    end
+
+    def self.spots_by_pagetoken(options = {})
+      request = new(PAGETOKEN_URL, options)
       request.parsed_response
     end
 

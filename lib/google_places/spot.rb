@@ -52,6 +52,7 @@ module GooglePlaces
     # @see http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 List of supported languages
     # @see https://developers.google.com/maps/documentation/places/supported_types List of supported types
     def self.list(lat, lng, api_key, sensor, options = {})
+
       location = Location.new(lat, lng)
       multipage_request = options.delete(:multipage)
       rankby = options.delete(:rankby)
@@ -86,7 +87,6 @@ module GooglePlaces
       end
 
       request(:spots, multipage_request, exclude, options)
-      # raise(request(:spots, multipage_request, exclude, options).inspect)
 
     end
 
@@ -123,6 +123,50 @@ module GooglePlaces
       )
 
       self.new(response['result'])
+    end
+
+    # Return the next page of Spots
+    #
+    # @return [Array<Spot>]
+    # @param [String] api_key the provided api key
+    # @param [Boolean] sensor
+    #   Indicates whether or not the Place request came from a device using a location sensor (e.g. a GPS) to determine the location sent in this request.
+    #   <b>Note that this is a mandatory parameter</b>
+    # @param [Hash] options                                                                                                                                                                                                                                                                                     distance. This option sorts results in ascending order by their distance from the specified location. Ranking results by distance will set a fixed search radius of 50km. One or more of keyword, name, or types is required.
+    # @option options [String,Array] :types
+    #   Restricts the results to Spots matching at least one of the specified types
+    # @option options [String] :name
+    #   A term to be matched against the names of Places.
+    #   Results will be restricted to those containing the passed name value.
+    # @option options [String] :keyword
+    #   A term to be matched against all content that Google has indexed for this Spot,
+    #   including but not limited to name, type, and address,
+    #   as well as customer reviews and other third-party content.
+    # @option options [String] :language
+    #   The language code, indicating in which language the results should be returned, if possible.
+    # @option options [String,Array<String>] :exclude ([])
+    #   A String or an Array of <b>types</b> to exclude from results
+    #
+    # @option options [Hash] :retry_options ({})
+    #   A Hash containing parameters for search retries
+    # @option options [Object] :retry_options[:status] ([])
+    # @option options [Integer] :retry_options[:max] (0) the maximum retries
+    # @option options [Integer] :retry_options[:delay] (5) the delay between each retry in seconds
+    #
+    # @see http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 List of supported languages
+    # @see https://developers.google.com/maps/documentation/places/supported_types List of supported types
+    def self.list_by_pagetoken(pagetoken, api_key, sensor, options = {})
+      exclude = options.delete(:exclude) || []
+      exclude = [exclude] unless exclude.is_a?(Array)
+
+      options = {
+          :pagetoken => pagetoken,
+          :sensor => sensor,
+          :key => api_key
+      }
+
+      request(:spots_by_pagetoken, false, exclude, options)
+
     end
 
     # Search for Spots with a query
