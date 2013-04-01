@@ -52,6 +52,7 @@ module GooglePlaces
     # @see https://developers.google.com/maps/documentation/places/supported_types List of supported types
     def self.list(lat, lng, api_key, sensor, options = {})
       location = Location.new(lat, lng)
+      multipage_request = !!options.delete(:multipage) || false if multipage.nil?
       rankby = options.delete(:rankby)
       radius = options.delete(:radius) || 1000 if rankby.nil?
       types  = options.delete(:types)
@@ -83,11 +84,7 @@ module GooglePlaces
         options.merge!(:types => types)
       end
 
-      results = []
-      self.multi_pages_request(:spots, options) do |result|
-        results << self.new(result) if (result['types'] & exclude) == []
-      end
-      results
+      request(:spots, multipage_request, exclude, options)
     end
 
     # Search for a Spot with a reference key
@@ -183,6 +180,7 @@ module GooglePlaces
 
       query = query
       sensor = sensor
+      multipage_request = !!options.delete(:multipage) || false if multipage.nil?
       location = Location.new(options.delete(:lat), options.delete(:lng)) if with_location
       radius = options.delete(:radius) if with_radius
       rankby = options.delete(:rankby)
@@ -211,14 +209,18 @@ module GooglePlaces
         options.merge!(:types => types)
       end
 
+      request(:spots_by_query, multipage_request, exclude, options)
+    end
+
+    def self.request(method, multipage_request, exclude, options)
       results = []
-      self.multi_pages_request(:spots_by_query, options) do |result|
+      self.multi_pages_request(method, multipage_request, options) do |result|
         results << self.new(result) if (result['types'] & exclude) == []
       end
       results
     end
 
-    def self.multi_pages_request(method, options)
+    def self.multi_pages_request(method, multipage_request, options)
       begin
 
         response = Request.send(method, options)
@@ -228,7 +230,7 @@ module GooglePlaces
 
         # request the next page if presence of a "next_page" token
         next_page = false
-        unless response["next_page_token"].nil?
+        if multipage_request && !response["next_page_token"].nil?
           options = {
             :pagetoken => response["next_page_token"],
             :key => options[:key],
