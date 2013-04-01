@@ -5,7 +5,7 @@ describe GooglePlaces::Request do
   before :each do
     @location = GooglePlaces::Location.new('-33.8670522', '151.1957362').format
     @query = "Statue of liberty, New York"
-    @rankby = "distance"
+    @radius = 200
     @sensor = false
     @reference = "CnRsAAAASc4grenwL0h3X5VPNp5fkDNfqbjt3iQtWIPlKS-3ms9GbnCxR_FLHO0B0ZKCgJSg19qymkeHagjQFB4aUL87yhp4mhFTc17DopK1oiYDaeGthztSjERic8TmFNe-6zOpKSdiZWKE6xlQvcbSiWIJchIQOEYZqunSSZqNDoBSs77bWRoUJcMMVANtSlhy0llKI0MI6VcC7DU"
   end
@@ -16,10 +16,9 @@ describe GooglePlaces::Request do
       it 'should retrieve a list of spots' do
         response = GooglePlaces::Request.spots(
           :location => @location,
+          :radius => @radius,
           :sensor => @sensor,
-          :key => api_key,
-          :keyword => "pizza",
-          :rankby => "distance"
+          :key => api_key
         )
         response['results'].should_not be_empty
       end
@@ -29,6 +28,7 @@ describe GooglePlaces::Request do
         lambda {
           GooglePlaces::Request.spots(
             :location => @location,
+            :radius => @radius,
             :key => api_key
           )
         }.should raise_error GooglePlaces::RequestDeniedError
@@ -39,6 +39,7 @@ describe GooglePlaces::Request do
         it do
           lambda {
             GooglePlaces::Request.spots(
+              :radius => @radius,
               :sensor => @sensor,
               :key => api_key
             )
@@ -50,6 +51,7 @@ describe GooglePlaces::Request do
           it do
             lambda {
               GooglePlaces::Request.spots(
+                :radius => @radius,
                 :sensor => @sensor,
                 :key => api_key,
                 :retry_options => {
@@ -65,6 +67,7 @@ describe GooglePlaces::Request do
           it do
             lambda {
               GooglePlaces::Request.spots(
+                :radius => @radius,
                 :sensor => @sensor,
                 :key => api_key,
                 :retry_options => {
