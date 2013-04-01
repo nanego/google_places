@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9afec551-f310-4713-9c2c-154d3466f666" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/google_places/spot.rb" afterPath="$PROJECT_DIR$/lib/google_places/spot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="google_places.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,7 +31,7 @@
       <file leaf-file-name="spot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/google_places/spot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="230" column="35" selection-start="11250" selection-end="11250" vertical-scroll-proportion="0.3618182">
+            <state line="230" column="13" selection-start="11222" selection-end="11222" vertical-scroll-proportion="0.43636364">
               <folding />
             </state>
           </provider>
@@ -241,7 +240,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/google_places/spot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="230" column="35" selection-start="11250" selection-end="11250" vertical-scroll-proportion="0.3618182">
+        <state line="230" column="13" selection-start="11222" selection-end="11222" vertical-scroll-proportion="0.43636364">
           <folding />
         </state>
       </provider>

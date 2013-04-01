@@ -226,9 +226,9 @@ module GooglePlaces
         response = Request.send(method, options)
         response['results'].each do |result|
           if !multipage_request && !response["next_page_token"].nil? && result == response['results'].last
-            result.nextpage = response["next_page_token"]
+            @nextpage = response["next_page_token"]
           else
-            result.nextpage = "TEST"
+            @nextpage = "TEST"
           end
           yield(result)
         end
