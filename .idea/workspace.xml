@@ -7,10 +7,10 @@
     <ignored path="google_places.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364799340382" ignored="false" />
-    <file path="/spot.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364802857384" ignored="false" />
+    <file path="/spot.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364809389292" ignored="false" />
     <file path="$PROJECT_DIR$/../txtup/Gemfile" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803268001" ignored="false" />
-    <file path="$PROJECT_DIR$/../txtup/app/controllers/recherches_controller.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803621865" ignored="false" />
-    <file path="/recherches_controller.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803564387" ignored="false" />
+    <file path="$PROJECT_DIR$/../txtup/app/controllers/recherches_controller.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364808466619" ignored="false" />
+    <file path="/recherches_controller.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364808367745" ignored="false" />
     <file path="$USER_HOME$/.rbenv/versions/1.9.3-p0/lib/ruby/gems/1.9.1/bundler/gems/google_places-47b4b34c863b/lib/google_places/spot.rb" changelist="9afec551-f310-4713-9c2c-154d3466f666" time="1364803734182" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +31,7 @@
       <file leaf-file-name="spot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/google_places/spot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="182" column="52" selection-start="9593" selection-end="9593" vertical-scroll-proportion="0.53636366">
+            <state line="229" column="58" selection-start="11213" selection-end="11213" vertical-scroll-proportion="0.4781818">
               <folding />
             </state>
           </provider>
@@ -240,7 +240,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/google_places/spot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="52" selection-start="9593" selection-end="9593" vertical-scroll-proportion="0.53636366">
+        <state line="229" column="58" selection-start="11213" selection-end="11213" vertical-scroll-proportion="0.4781818">
           <folding />
         </state>
       </provider>
