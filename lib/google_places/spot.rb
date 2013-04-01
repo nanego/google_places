@@ -279,6 +279,7 @@ module GooglePlaces
       @review_summary             = json_result_object['review_summary']
       @photos                     = photos_component(json_result_object['photos'])
       @reviews                    = reviews_component(json_result_object['reviews'])
+      @nextpage = json_result_object['nextpage']
     end
 
     def address_component(address_component_type, address_component_length)
