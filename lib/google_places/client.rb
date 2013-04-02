@@ -161,5 +161,9 @@ module GooglePlaces
     def spots_by_query(query, options = {})
       Spot.list_by_query(query, @api_key, @sensor, @options.merge(options))
     end
+
+    def spots_by_pagetoken(pagetoken, options = {})
+      Spot.list_by_pagetoken(pagetoken, @api_key, @sensor, @options.merge(options))
+    end
   end
 end
